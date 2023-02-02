@@ -21,7 +21,7 @@ internal static class Optimizer
 			InlineMovMathToSingleMath(instructions);
 			RemoveDebugLocals(instructions);
 			AnotherTryToReduceMovs(instructions);
-			TryReduceUsedRegisters(instructions);
+			TryReduceUsedRegisters(instructions, stack);
 			RemoveNonSmartTricks(instructions);
 			//AvxSSETricks(instructions); // not effective
 			MovStackToFreeRegs(instructions, stack);
@@ -185,7 +185,7 @@ internal static class Optimizer
 		}
 	}
 
-	private static void TryReduceUsedRegisters(IList<Instruction> instructions, int step = 0)
+	private static void TryReduceUsedRegisters(IList<Instruction> instructions, StackInfo stack, int step = 0)
 	{
 		if (step == 2) return;
 
@@ -201,6 +201,11 @@ internal static class Optimizer
 				{
 					if (replacethis == Register.None)
 					{
+						if (instr.Op1Register == Register.RCX && stack.args > 0) continue;
+						if (instr.Op1Register == Register.RDX && stack.args > 1) continue;
+						if (instr.Op1Register == Register.R8 && stack.args > 2) continue;
+						if (instr.Op1Register == Register.R9 && stack.args > 3) continue;
+
 						replacethis = instr.Op1Register;
 						withthis = instr.Op0Register;
 						instr.Op1Register = instr.Op0Register;
@@ -225,7 +230,7 @@ internal static class Optimizer
 			instructions[i] = instr;
 		}
 
-		TryReduceUsedRegisters(instructions, step + 1);
+		TryReduceUsedRegisters(instructions, stack, step + 1);
 	}
 
 	private static void RemoveNonSmartTricks(IList<Instruction> instructions)

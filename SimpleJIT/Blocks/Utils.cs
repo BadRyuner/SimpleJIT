@@ -152,6 +152,8 @@ namespace SimpleJIT.Blocks
 
 						case Code.Ble: 
 						case Code.Ble_S:
+						case Code.Ble_Un:
+						case Code.Ble_Un_S:
 							{
 								var jmp = (Instruction)instr.Operand;
 								var label = asm.CreateLabel(jmp.Offset.ToString("X2"));
@@ -165,6 +167,8 @@ namespace SimpleJIT.Blocks
 
 						case Code.Bge:
 						case Code.Bge_S:
+						case Code.Bge_Un:
+						case Code.Bge_Un_S:
 							{
 								var jmp = (Instruction)instr.Operand;
 								var label = asm.CreateLabel(jmp.Offset.ToString("X2"));
@@ -191,6 +195,8 @@ namespace SimpleJIT.Blocks
 
 						case Code.Bgt:
 						case Code.Bgt_S:
+						case Code.Bgt_Un:
+						case Code.Bgt_Un_S:
 							{
 								var jmp = (Instruction)instr.Operand;
 								var label = asm.CreateLabel(jmp.Offset.ToString("X2"));
@@ -204,6 +210,8 @@ namespace SimpleJIT.Blocks
 
 						case Code.Blt:
 						case Code.Blt_S:
+						case Code.Blt_Un:
+						case Code.Blt_Un_S:
 							{
 								var jmp = (Instruction)instr.Operand;
 								var label = asm.CreateLabel(jmp.Offset.ToString("X2"));

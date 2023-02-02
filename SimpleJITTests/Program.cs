@@ -13,8 +13,8 @@ namespace SimpleJITTests
 	{
 		internal static void Main(string[] args)
 		{
-			//DoSomeThingsCecil();
-			DoSomeThings();
+			DoSomeThingsCecil();
+			//DoSomeThings();
 			//DoBench();
 			Console.ReadLine();
 		}
@@ -26,15 +26,15 @@ namespace SimpleJITTests
 
 			var module = Mono.Cecil.ModuleDefinition.CreateModule("jitfrommem", Mono.Cecil.ModuleKind.Dll);
 			var @long = module.ImportReference(typeof(long));
-			var method = new Mono.Cecil.MethodDefinition("test", Mono.Cecil.MethodAttributes.Static, @long);
+			var method = new Mono.Cecil.MethodDefinition("MAX", Mono.Cecil.MethodAttributes.Static, @long);
 			method.Parameters.Add(new Mono.Cecil.ParameterDefinition("1", Mono.Cecil.ParameterAttributes.None, @long));
 			method.Parameters.Add(new Mono.Cecil.ParameterDefinition("2", Mono.Cecil.ParameterAttributes.None, @long));
-			method.Body = new Mono.Cecil.Cil.MethodBody(method);
+			method.Body = new MethodBody(method);
 			method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_0));
 			method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_1));
 			var ldarg0 = Instruction.Create(OpCodes.Ldarg_0);
-			method.Body.Instructions.Add(Instruction.Create(OpCodes.Bne_Un_S, ldarg0));
-			method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldc_I4, 500));
+			method.Body.Instructions.Add(Instruction.Create(OpCodes.Bgt_S, ldarg0));
+			method.Body.Instructions.Add(Instruction.Create(OpCodes.Ldarg_1));
 			method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
 			method.Body.Instructions.Add(ldarg0);
 			method.Body.Instructions.Add(Instruction.Create(OpCodes.Ret));
@@ -51,7 +51,7 @@ namespace SimpleJITTests
 			i = 2;
 			for (int x = 1; x < 5; x++)
 			{
-				//i = test(i, x);
+				i = Max(i, x);
 				Console.WriteLine(i);
 			}
 		}
@@ -96,6 +96,8 @@ namespace SimpleJITTests
 		{
 			kek++;
 		}
+
+		internal static long Max(long a, long b) => a > b ? a : b;
 
 		static byte kek = 1;
 
