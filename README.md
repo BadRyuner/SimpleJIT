@@ -1,6 +1,9 @@
 # SimpleJIT
 Not a very smart JIT compiler for C# instructions.
+
 Not all OpCodes are supported.
+
+Made for fun and for educational purposes (how to do it wrong).
 # Example
 How to jit:
 ```csharp
