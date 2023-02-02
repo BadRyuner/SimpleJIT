@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E7BEEEC8-7CF1-40E4-92AB-B89B23EC043B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SimpleJIT</RootNamespace>
+    <AssemblyName>SimpleJIT</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <LangVersion>preview</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>3</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Iced, Version=1.18.0.0, Culture=neutral, PublicKeyToken=5baba79f4264913b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Iced.1.18.0\lib\net45\Iced.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Mono.Cecil, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Mdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Pdb, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil.Rocks, Version=0.11.4.0, Culture=neutral, PublicKeyToken=50cebf1cceb9d05e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mono.Cecil.0.11.4\lib\net40\Mono.Cecil.Rocks.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Blocks\CallBlock.cs" />
+    <Compile Include="Blocks\Math\CgtBlock.cs" />
+    <Compile Include="Blocks\Extensions.cs" />
+    <Compile Include="Blocks\Jumps\BeqBlock.cs" />
+    <Compile Include="Blocks\Jumps\BgeBlock.cs" />
+    <Compile Include="Blocks\Jumps\BgtBlock.cs" />
+    <Compile Include="Blocks\Jumps\BleBlock.cs" />
+    <Compile Include="Blocks\Jumps\BltBlock.cs" />
+    <Compile Include="Blocks\Jumps\BneBlock.cs" />
+    <Compile Include="Blocks\Jumps\BrBlock.cs" />
+    <Compile Include="Blocks\Jumps\BrfalseBlock.cs" />
+    <Compile Include="Blocks\Jumps\BrtrueBlock.cs" />
+    <Compile Include="Blocks\Math\CeqBlock.cs" />
+    <Compile Include="Blocks\Jumps\JumpBlock.cs" />
+    <Compile Include="Blocks\LdlocBlock.cs" />
+    <Compile Include="Blocks\Math\AddBlock.cs" />
+    <Compile Include="Blocks\BlockBase.cs" />
+    <Compile Include="Blocks\Math\DivBlock.cs" />
+    <Compile Include="Blocks\LoadArg.cs" />
+    <Compile Include="Blocks\Math\MulBlock.cs" />
+    <Compile Include="Blocks\NopBlock.cs" />
+    <Compile Include="Blocks\Math\PushInt.cs" />
+    <Compile Include="Blocks\Math\RemBlock.cs" />
+    <Compile Include="Blocks\PseudOOP\StsfldBlock.cs" />
+    <Compile Include="Blocks\PseudOOP\LdsfldBlock.cs" />
+    <Compile Include="Blocks\RetBlock.cs" />
+    <Compile Include="Blocks\Math\SubBlock.cs" />
+    <Compile Include="Blocks\SaveArg.cs" />
+    <Compile Include="Blocks\StlocBlock.cs" />
+    <Compile Include="Optimizer.cs" />
+    <Compile Include="StackInfo.cs" />
+    <Compile Include="Blocks\Utils.cs" />
+    <Compile Include="SimpleJIT.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnsafeUtils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
